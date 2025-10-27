@@ -1,9 +1,9 @@
-// import OrderedCollections
+import OrderedCollections
 
 #if !hasFeature(Embedded)
   public struct HTMLAttributes<Content: AsyncHTML>: AsyncHTML {
     // @usableFromInline
-    var attributes: Set<HTMLAttribute>
+    var attributes: OrderedSet<HTMLAttribute>
 
     // @usableFromInline
     let content: Content
@@ -57,7 +57,7 @@ extension HTMLAttributes: HTML where Content: HTML {
 #else
   public struct HTMLAttributes<Content: HTML>: HTML {
     // @usableFromInline
-    var attributes: Set<HTMLAttribute>
+    var attributes: OrderedSet<HTMLAttribute>
 
     // @usableFromInline
     let content: Content
@@ -112,14 +112,14 @@ extension HTMLAttributes {
     mergeMode: HTMLAttribute.MergeMode = .replaceValue
   ) -> Self {
     var copy = self
-    copy.attributes.insert(HTMLAttribute(name: name, value: value, mergeMode: mergeMode))
+    copy.attributes.append(HTMLAttribute(name: name, value: value, mergeMode: mergeMode))
     return copy
   }
 
   // @inlinable @inline(__always)
   public func attribute(_ attribute: HTMLAttribute) -> Self {
     var copy = self
-    copy.attributes.insert(attribute)
+    copy.attributes.append(attribute)
     return copy
   }
 

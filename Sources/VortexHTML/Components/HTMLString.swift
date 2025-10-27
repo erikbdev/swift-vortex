@@ -7,7 +7,7 @@ public let HTMLRaw = HTMLString.init(raw:)
 public let HTMLText = HTMLString.init(_:)
 
 // @resultBuilder
-public struct HTMLString: HTML, Sendable, ExpressibleByStringLiteral, ExpressibleByStringInterpolation {
+public struct HTMLString: HTML, Sendable {
   private var _storage: [StorageValue]
 
   public var body: Never { fatalError() }
@@ -26,12 +26,6 @@ public struct HTMLString: HTML, Sendable, ExpressibleByStringLiteral, Expressibl
   public init(_ string: consuming String) {
     self.init(string.utf8, escape: true)
   }
-
-  #if !hasFeature(Embedded)
-    public init(stringInterpolation: consuming StringInterpolation) {
-      self._storage = stringInterpolation._storage
-    }
-  #endif
 
   @usableFromInline
   init(_ bytes: consuming some Sequence<UInt8>, escape: Bool) {
@@ -95,8 +89,24 @@ public struct HTMLString: HTML, Sendable, ExpressibleByStringLiteral, Expressibl
   }
 }
 
+extension HTMLString {
+  fileprivate struct StorageValue: Sendable {
+    let element: Element
+    let escape: Bool
+
+    init<S: Sequence<UInt8>>(_ bytes: S, escape: Bool) {
+      self.element = .bytes(ContiguousArray(bytes))
+      self.escape = escape
+    }
+
+    enum Element: Sendable {
+      case bytes(ContiguousArray<UInt8>)
+    }
+  }
+}
+
 #if !hasFeature(Embedded)
-  extension HTMLString {
+  extension HTMLString: ExpressibleByStringLiteral, ExpressibleByStringInterpolation {
     public struct StringInterpolation: StringInterpolationProtocol {
       fileprivate var _storage: [StorageValue]
 
@@ -112,37 +122,13 @@ public struct HTMLString: HTML, Sendable, ExpressibleByStringLiteral, Expressibl
         _storage.append(.init(value.utf8, escape: true))
       }
 
-      // public mutating func appendInterpolation<Content: HTML & Sendable>(_ html: consuming Content) {
-      //   _storage.append(.init(html, escape: true))
-      // }
-
       public mutating func appendInterpolation(raw value: consuming String) {
         _storage.append(.init(value.utf8, escape: false))
       }
-
-      // public mutating func appendInterpolation<Content: HTML & Sendable>(raw html: consuming Content) {
-      //   _storage.append(.init(html, escape: false))
-      // }
-    }
-  }
-
-  private struct StorageValue: Sendable {
-    let element: Element
-    let escape: Bool
-
-    init<S: Sequence<UInt8>>(_ bytes: S, escape: Bool) {
-      self.element = .bytes(ContiguousArray(bytes))
-      self.escape = escape
     }
 
-    // init<T: HTML & Sendable>(_ html: T, escape: Bool) {
-    //   self.element = .html(AnySendableHTML(html))
-    //   self.escape = escape
-    // }
-
-    enum Element: Sendable {
-      case bytes(ContiguousArray<UInt8>)
-      // case html(AnySendableHTML)
+    public init(stringInterpolation: consuming StringInterpolation) {
+      self._storage = stringInterpolation._storage
     }
   }
 

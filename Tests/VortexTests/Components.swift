@@ -1,7 +1,7 @@
 import VortexHTML
 
-struct HelloWorld: HTML {
+struct DemoOne: HTML {
   var body: some HTML {
-    EmptyHTML()
+    p { "Hello, there!" }
   }
 }

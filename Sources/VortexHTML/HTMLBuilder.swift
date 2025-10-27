@@ -44,21 +44,10 @@ public struct HTMLBuilder {
   }
 
   extension HTMLBuilder {
-    // @inlinable @inline(__always) 
+    // @inlinable @inline(__always)
     public static func buildExpression<Content: AsyncHTML>(_ component: Content) -> Content {
       component
     }
-
-    // @inlinable @inline(__always)
-    // public static func buildExpression(_ component: HTMLString) -> HTMLString {
-    //   component
-    // }
-
-    // @_disfavoredOverload
-    // // @inlinable @inline(__always)
-    // public static func buildExpression(_ component: String) -> HTMLString {
-    //   HTMLString(component)
-    // }
 
     // @inlinable @inline(__always)
     public static func buildFinalResult<Content: AsyncHTML>(_ component: Content) -> Content {
@@ -108,19 +97,20 @@ public struct HTMLBuilder {
     }
 
     // @inlinable @inline(__always)
-    // public static func buildExpression(_ component: HTMLString) -> HTMLString {
-    //   component
-    // }
-
-    // @_disfavoredOverload
-    // // @inlinable @inline(__always)
-    // public static func buildExpression(_ component: String) -> HTMLString {
-    //   HTMLString(component)
-    // }
-
-    // @inlinable @inline(__always)
     public static func buildFinalResult<Content: HTML>(_ component: Content) -> Content {
       component
     }
   }
 #endif
+
+extension HTMLBuilder {
+  @inlinable @inline(__always)
+  public static func buildExpression(_ component: HTMLString) -> HTMLString {
+    component
+  }
+
+  @_disfavoredOverload
+  public static func buildExpression(_ component: String) -> HTMLString {
+    HTMLString(component)
+  }
+}
