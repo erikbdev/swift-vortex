@@ -1,54 +1,26 @@
-#if !hasFeature(Embedded)
-  public enum _HTMLConditional<TrueContent: AsyncHTML, FalseContent: AsyncHTML>: AsyncHTML {
-    case trueContent(TrueContent)
-    case falseContent(FalseContent)
-
-    @_spi(Render)
-    public static func _render<Output: AsyncHTMLOutputStream>(
-      _ html: consuming Self,
-      into output: inout Output
-    ) async throws {
-      switch html {
-      case .trueContent(let html): try await TrueContent._render(html, into: &output)
-      case .falseContent(let html): try await FalseContent._render(html, into: &output)
-      }
-    }
-  }
-
-extension _HTMLConditional: HTML where TrueContent: HTML, FalseContent: HTML {
-  @_spi(Render)
-  public static func _render<Output: HTMLOutputStream>(
-    _ html: consuming Self,
-    into output: inout Output
-  ) {
-    switch html {
-    case .trueContent(let html): TrueContent._render(html, into: &output)
-    case .falseContent(let html): FalseContent._render(html, into: &output)
-    }
-  }
-}
-
-#else
-  public enum _HTMLConditional<TrueContent: HTML, FalseContent: HTML>: HTML {
-    case trueContent(TrueContent)
-    case falseContent(FalseContent)
-
-  @_spi(Render)
-  public static func _render<Output: HTMLOutputStream>(
-    _ html: consuming Self,
-    into output: inout Output
-  ) {
-    switch html {
-    case .trueContent(let html): TrueContent._render(html, into: &output)
-    case .falseContent(let html): FalseContent._render(html, into: &output)
-    }
-  }
-  }
-#endif
-
-extension _HTMLConditional {
-  @inlinable @inline(__always)
+public struct ConditionalHTML<Value, IfContent: HTML, ElseContent: HTML>: HTML {
   public var body: Never { fatalError() }
-}
+  let condition: () -> Value
+  let ifContent: (Value) -> IfContent
+  let elseContent: () -> ElseContent
 
-// extension _HTMLConditional: Sendable where TrueContent: Sendable, FalseContent: Sendable {}
+  public init(
+    _ condition: @escaping @autoclosure () -> Value,
+    @HTMLBuilder if ifContent: @escaping () -> IfContent,
+    @HTMLBuilder else elseContent: @escaping () -> ElseContent = EmptyHTML.init
+  ) where Value == Bool {
+    self.condition = condition
+    self.ifContent = { _ in ifContent() }
+    self.elseContent = elseContent
+  }
+
+  public init<Wrapped>(
+    _ condition: @escaping @autoclosure () -> Value,
+    @HTMLBuilder if ifContent: @escaping (Wrapped) -> IfContent,
+    @HTMLBuilder else elseContent: @escaping () -> ElseContent = EmptyHTML.init
+  ) where Value == Wrapped? {
+    self.condition = condition
+    self.ifContent = { ifContent(unsafeBitCast($0, to: Wrapped.self)) }
+    self.elseContent = elseContent
+  }
+}

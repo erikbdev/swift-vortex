@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
   name: "swift-vortex",
+  platforms: [.macOS(.v14), .iOS(.v14)],
   products: [],
   dependencies: [
     // .package(url: "https://github.com/apple/swift-collections.git", from: "1.3.0")
