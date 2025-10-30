@@ -14,7 +14,6 @@
   }
 #endif
 
-
 extension Optional: HTML where Wrapped: HTML {
     public var body: Never { fatalError() }
 
