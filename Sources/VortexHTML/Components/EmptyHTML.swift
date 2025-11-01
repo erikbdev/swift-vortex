@@ -18,4 +18,3 @@ public struct EmptyHTML: HTML, Sendable {
     ) async throws {}
   #endif
 }
-

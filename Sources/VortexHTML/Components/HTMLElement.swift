@@ -19,16 +19,16 @@
       _ html: consuming Self,
       into output: inout Output
     ) async throws {
-      // try await HTMLVoidElement._render(
-      //   HTMLVoidElement(tag: html.tag),
-      //   into: &output
-      // )
-      // try await withDependencies {
-      //   $0.htmlContext.attributes.removeAll()
-      //   $0.htmlContext.depth += 1
-      // } operation: {
-      //   try await Content._render(html.content, into: &output)
-      // }
+      try await HTMLVoidElement._render(
+        HTMLVoidElement(tag: html.tag),
+        into: &output
+      )
+      try await withHTMLContext {
+        $0.attributes.removeAll()
+        $0.depth += 1
+      } operation: {
+        try await Content._render(html.content, into: &output)
+      }
       // var buffer = Data()
       // buffer.append(0x3C)  // <
       // buffer.append(0x2F)  // /
@@ -38,31 +38,30 @@
     }
   }
 
-
-extension HTMLElement: HTML where Content: HTML {
-  @_spi(Render)
-  public static func _render<Output: HTMLOutputStream>(
-    _ html: consuming Self,
-    into output: inout Output
-  ) {
-    //   HTMLVoidElement._render(
-    //     HTMLVoidElement(tag: html.tag),
-    //     into: &output
-    //   )
-    //   withDependencies {
-    //     $0.htmlContext.attributes.removeAll()
-    //     $0.htmlContext.depth += 1
-    //   } operation: {
-    //     Content._render(html.content, into: &output)
-    //   }
-    //   var buffer = Data()
-    //   buffer.append(0x3C)  // <
-    //   buffer.append(0x2F)  // /
-    //   buffer.append(contentsOf: html.tag.utf8)  // <tag-name>
-    //   buffer.append(0x3E)  // >
-    //   output.write(buffer)
+  extension HTMLElement: HTML where Content: HTML {
+    @_spi(Render)
+    public static func _render<Output: HTMLOutputStream>(
+      _ html: consuming Self,
+      into output: inout Output
+    ) {
+      HTMLVoidElement._render(
+        HTMLVoidElement(tag: html.tag),
+        into: &output
+      )
+      withHTMLContext {
+        $0.attributes.removeAll()
+        $0.depth += 1
+      } operation: {
+        Content._render(html.content, into: &output)
+      }
+      //   var buffer = Data()
+      //   buffer.append(0x3C)  // <
+      //   buffer.append(0x2F)  // /
+      //   buffer.append(contentsOf: html.tag.utf8)  // <tag-name>
+      //   buffer.append(0x3E)  // >
+      //   output.write(buffer)
+    }
   }
-}
 #else
   public struct HTMLElement<Content: HTML>: HTML {
     public let tag: String
@@ -70,28 +69,28 @@ extension HTMLElement: HTML where Content: HTML {
     // @usableFromInline
     let content: Content
 
-  @_spi(Render)
-  public static func _render<Output: HTMLOutputStream>(
-    _ html: consuming Self,
-    into output: inout Output
-  ) {
-    //   HTMLVoidElement._render(
-    //     HTMLVoidElement(tag: html.tag),
-    //     into: &output
-    //   )
-    //   withDependencies {
-    //     $0.htmlContext.attributes.removeAll()
-    //     $0.htmlContext.depth += 1
-    //   } operation: {
-    //     Content._render(html.content, into: &output)
-    //   }
-    //   var buffer = Data()
-    //   buffer.append(0x3C)  // <
-    //   buffer.append(0x2F)  // /
-    //   buffer.append(contentsOf: html.tag.utf8)  // <tag-name>
-    //   buffer.append(0x3E)  // >
-    //   output.write(buffer)
-  }
+    @_spi(Render)
+    public static func _render<Output: HTMLOutputStream>(
+      _ html: consuming Self,
+      into output: inout Output
+    ) {
+      HTMLVoidElement._render(
+        HTMLVoidElement(tag: html.tag),
+        into: &output
+      )
+      withHTMLContext {
+        $0.attributes.removeAll()
+        $0.depth += 1
+      } operation: {
+        Content._render(html.content, into: &output)
+      }
+      //   var buffer = Data()
+      //   buffer.append(0x3C)  // <
+      //   buffer.append(0x2F)  // /
+      //   buffer.append(contentsOf: html.tag.utf8)  // <tag-name>
+      //   buffer.append(0x3E)  // >
+      //   output.write(buffer)
+    }
   }
 #endif
 
@@ -140,6 +139,7 @@ public struct HTMLVoidElement: HTML, Sendable {
     }
 
     private func writeBytes(_ buffer: inout [UInt8]) {
+      let context = HTMLContext.context
       // @Dependency(\.htmlContext) var context
       // buffer.append(0x3C)  // <
       // buffer.append(contentsOf: self.tag.utf8)  // tag-name

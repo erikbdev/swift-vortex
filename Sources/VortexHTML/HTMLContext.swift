@@ -1,18 +1,14 @@
-// import Dependencies
-// import DependenciesMacros
-// import OrderedCollections
-
 public struct HTMLContext: Sendable {
   public let configuration: Configuration
-  // public var attributes = OrderedDictionary<String, String>()
+  public var attributes: [String: String] = [:]
 
   public var styles: StyleSheetGenerator?
   public var stylesheet: String { styles?.stylesheet() ?? "" }
 
-  @usableFromInline
+  // @usableFromInline
   var depth = 0
 
-  @usableFromInline
+  // @usableFromInline
   var currentIndentation: String { String(repeating: configuration.indentation, count: depth) }
 
   public init(_ configuration: Configuration) {
@@ -39,6 +35,8 @@ public struct HTMLContext: Sendable {
     // let generate: @Sendable (_ styles: OrderedSet<InlineStyle>) -> [String]
     let stylesheet: @Sendable () -> String
   }
+
+  @TaskLocal static var context = HTMLContext(.minified)
 }
 
 // extension HTMLContext: TestDependencyKey {
@@ -173,3 +171,16 @@ public struct HTMLContext: Sendable {
 //     )
 //   }
 // }
+
+func withHTMLContext<Subject>(_ modifyContext: (inout HTMLContext) -> Void, operation: () -> Subject) -> Subject {
+  var context = HTMLContext.context
+  modifyContext(&context)
+  return HTMLContext.$context.withValue(context, operation: operation)
+}
+func withHTMLContext<Subject>(_ modifyContext: (inout HTMLContext) async throws -> Void, operation: () async throws -> Subject) async throws
+  -> Subject
+{
+  var context = HTMLContext.context
+  try await modifyContext(&context)
+  return try await HTMLContext.$context.withValue(context, operation: operation)
+}

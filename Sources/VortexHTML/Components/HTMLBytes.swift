@@ -10,9 +10,9 @@ struct _HTMLBuffer: HTML, Sendable {
 
 #if !hasFeature(Embedded)
   extension _HTMLBuffer: AsyncHTMLOutputStream {
-  mutating func write(_ bytes: consuming some Sequence<UInt8>) async throws {
-    self.bytes.append(contentsOf: bytes)
-  }
+    mutating func write(_ bytes: consuming some Sequence<UInt8>) async throws {
+      self.bytes.append(contentsOf: bytes)
+    }
 
     static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,

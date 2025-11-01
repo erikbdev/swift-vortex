@@ -1,5 +1,3 @@
-import OrderedCollections
-
 #if !hasFeature(Embedded)
   public struct HTMLAttributes<Content: AsyncHTML>: AsyncHTML {
     // @usableFromInline
@@ -13,27 +11,27 @@ import OrderedCollections
       _ html: consuming Self,
       into output: inout Output
     ) async throws {
-      // try await withDependencies {
-      // html.resolveAttributes(&$0.htmlContext.attributes)
-      // } operation: {
-      // try await Content._render(html.content, into: &output)
-      // }
+      try await withHTMLContext {
+        html.resolveAttributes(&$0.attributes)
+      } operation: {
+        try await Content._render(html.content, into: &output)
+      }
     }
   }
 
-extension HTMLAttributes: HTML where Content: HTML {
-  @_spi(Render)
-  public static func _render<Output: HTMLOutputStream>(
-    _ html: consuming Self,
-    into output: inout Output
-  ) {
-    // withDependencies {
-    //   html.resolveAttributes(&$0.htmlContext.attributes)
-    // } operation: {
-    //   Content._render(html.content, into: &output)
-    // }
+  extension HTMLAttributes: HTML where Content: HTML {
+    @_spi(Render)
+    public static func _render<Output: HTMLOutputStream>(
+      _ html: consuming Self,
+      into output: inout Output
+    ) {
+      withHTMLContext {
+        html.resolveAttributes(&$0.attributes)
+      } operation: {
+        Content._render(html.content, into: &output)
+      }
+    }
   }
-}
 
   extension AsyncHTML {
     public func attribute(
@@ -62,17 +60,17 @@ extension HTMLAttributes: HTML where Content: HTML {
     // @usableFromInline
     let content: Content
 
-  @_spi(Render)
-  public static func _render<Output: HTMLOutputStream>(
-    _ html: consuming Self,
-    into output: inout Output
-  ) {
-    // withDependencies {
-    //   html.resolveAttributes(&$0.htmlContext.attributes)
-    // } operation: {
-    //   Content._render(html.content, into: &output)
-    // }
-  }
+    @_spi(Render)
+    public static func _render<Output: HTMLOutputStream>(
+      _ html: consuming Self,
+      into output: inout Output
+    ) {
+      withAttributes {
+        html.resolveAttributes(&$0)
+      } operation: {
+        Content._render(html.content, into: &output)
+      }
+    }
   }
 
   extension HTML {
