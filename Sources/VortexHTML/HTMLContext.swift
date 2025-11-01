@@ -2,13 +2,11 @@ public struct HTMLContext: Sendable {
   public let configuration: Configuration
   public var attributes: [String: String] = [:]
 
-  public var styles: StyleSheetGenerator?
-  public var stylesheet: String { styles?.stylesheet() ?? "" }
+  // public var styles: StyleSheetGenerator?
+  // public var stylesheet: String { styles?.stylesheet() ?? "" }
 
-  // @usableFromInline
   var depth = 0
 
-  // @usableFromInline
   var currentIndentation: String { String(repeating: configuration.indentation, count: depth) }
 
   public init(_ configuration: Configuration) {
@@ -19,10 +17,7 @@ public struct HTMLContext: Sendable {
     let indentation: String
     let newLine: String
 
-    public init(
-      indentation: String,
-      newLine: String
-    ) {
+    public init(indentation: String, newLine: String) {
       self.indentation = indentation
       self.newLine = newLine
     }
@@ -31,12 +26,10 @@ public struct HTMLContext: Sendable {
     public static let pretty = Self(indentation: "  ", newLine: "\n")
   }
 
-  public struct StyleSheetGenerator: Sendable {
-    // let generate: @Sendable (_ styles: OrderedSet<InlineStyle>) -> [String]
-    let stylesheet: @Sendable () -> String
-  }
-
-  @TaskLocal static var context = HTMLContext(.minified)
+  // public struct StyleSheetGenerator: Sendable {
+  // let generate: @Sendable (_ styles: OrderedSet<InlineStyle>) -> [String]
+  // let stylesheet: @Sendable () -> String
+  // }
 }
 
 // extension HTMLContext: TestDependencyKey {
@@ -171,16 +164,3 @@ public struct HTMLContext: Sendable {
 //     )
 //   }
 // }
-
-func withHTMLContext<Subject>(_ modifyContext: (inout HTMLContext) -> Void, operation: () -> Subject) -> Subject {
-  var context = HTMLContext.context
-  modifyContext(&context)
-  return HTMLContext.$context.withValue(context, operation: operation)
-}
-func withHTMLContext<Subject>(_ modifyContext: (inout HTMLContext) async throws -> Void, operation: () async throws -> Subject) async throws
-  -> Subject
-{
-  var context = HTMLContext.context
-  try await modifyContext(&context)
-  return try await HTMLContext.$context.withValue(context, operation: operation)
-}

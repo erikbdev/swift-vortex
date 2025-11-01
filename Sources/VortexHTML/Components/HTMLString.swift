@@ -35,7 +35,9 @@ public struct HTMLString: HTML, Sendable {
   @_spi(Render)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
-    into output: inout Output
+    into output: inout Output,
+    context: HTMLContext
+
   ) {
     // var buffer = Data()
     // html.renderBytes(&buffer)
@@ -46,7 +48,9 @@ public struct HTMLString: HTML, Sendable {
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       // var buffer = Data()
       // html.renderBytes(&buffer)
@@ -82,7 +86,7 @@ public struct HTMLString: HTML, Sendable {
       //         }
       //       }
       //     }
-      //     AnySendableHTML._render(html, into: &proxy)
+      //     AnySendableHTML._render(html, into: &proxy, context: context)
       //   }
       }
     }

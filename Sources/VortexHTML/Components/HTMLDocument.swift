@@ -17,7 +17,9 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ document: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       //   @Dependency(\.htmlContext) var context
       //
@@ -26,7 +28,7 @@
       //
       //   if let ssg = context.styles {
       //     var bodyBytes = _HTMLBuffer()
-      //     try await Body._render(document.body, into: &bodyBytes)
+      //     try await Body._render(document.body, into: &bodyBytes, context: context)
       //     stylesheet = ssg.stylesheet()
       //     documentBody = .trueContent(bodyBytes)
       //   } else {
@@ -62,7 +64,9 @@ extension HTMLDocument where Head: HTML, Body: HTML {
   @_spi(Render)
   public static func _render<Output: HTMLOutputStream>(
     _ document: consuming Self,
-    into output: inout Output
+    into output: inout Output,
+    context: HTMLContext
+
   ) {
     // @Dependency(\.htmlContext) var context
     //
@@ -71,7 +75,7 @@ extension HTMLDocument where Head: HTML, Body: HTML {
     //
     // if let ssg = context.styles {
     //   var bodyBytes = _HTMLBuffer()
-    //   Body._render(document.body, into: &bodyBytes)
+    //   Body._render(document.body, into: &bodyBytes, context: context)
     //   stylesheet = ssg.stylesheet()
     //   documentBody = .trueContent(bodyBytes)
     // } else {

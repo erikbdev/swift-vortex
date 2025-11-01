@@ -29,6 +29,7 @@ public struct HTMLAttribute: Hashable, Sendable {
   }
 }
 
+/*
 // global attributes
 extension HTMLAttribute {
   public static func custom(name: String, value: String) -> Self {
@@ -511,3 +512,4 @@ extension HTMLAttribute {
     Self(name: "scope", value: scope.rawValue)
   }
 }
+*/

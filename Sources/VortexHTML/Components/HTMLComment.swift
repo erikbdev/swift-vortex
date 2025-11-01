@@ -14,10 +14,12 @@ public struct HTMLComment: HTML, Sendable {
   @_spi(Render)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming HTMLComment,
-    into output: inout Output
+    into output: inout Output,
+    context: HTMLContext
+
   ) {
     // output.write(start)
-    // HTMLString._render(HTMLString(html.text), into: &output)  // comment
+    // HTMLString._render(HTMLString(html.text), into: &output, context: context)  // comment
     // output.write(end)
   }
 
@@ -25,10 +27,12 @@ public struct HTMLComment: HTML, Sendable {
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       // try await output.write(start)
-      // try await HTMLString._render(HTMLString(html.text), into: &output)  // comment
+      // try await HTMLString._render(HTMLString(html.text), into: &output, context: context)  // comment
       // try await output.write(end)
     }
   #endif

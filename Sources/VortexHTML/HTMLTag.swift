@@ -66,25 +66,25 @@ public struct HTMLTag: Hashable, Sendable {
       HTMLElement(tag: rawValue, content: content)
     }
 
-    // @inlinable @inline(__always)
-    // @_disfavoredOverload
-    // public func callAsFunction<Content: AsyncHTML>(
-    //   _ attributes: HTMLAttribute...,
-    //   @HTMLBuilder content: @escaping AsyncClosure<Content>
-    // ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
-    //   self.callAsFunction(attributes: attributes, content: content)
-    // }
+  // @inlinable @inline(__always)
+  // @_disfavoredOverload
+  // public func callAsFunction<Content: AsyncHTML>(
+  //   _ attributes: HTMLAttribute...,
+  //   @HTMLBuilder content: @escaping AsyncClosure<Content>
+  // ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
+  //   self.callAsFunction(attributes: attributes, content: content)
+  // }
 
-    // // @inlinable @inline(__always)
-    // public func callAsFunction<Content: AsyncHTML>(
-    //   attributes: [HTMLAttribute],
-    //   @HTMLBuilder content: @escaping AsyncClosure<Content>
-    // ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
-    //   HTMLAttributes(
-    //     attributes: .init(attributes),
-    //     content: HTMLElement(tag: rawValue, content: content)
-    //   )
-    // }
+  // // @inlinable @inline(__always)
+  // public func callAsFunction<Content: AsyncHTML>(
+  //   attributes: [HTMLAttribute],
+  //   @HTMLBuilder content: @escaping AsyncClosure<Content>
+  // ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
+  //   HTMLAttributes(
+  //     attributes: .init(attributes),
+  //     content: HTMLElement(tag: rawValue, content: content)
+  //   )
+  // }
   #endif
 }
 

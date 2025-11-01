@@ -16,7 +16,7 @@
       //   $0.htmlContext = HTMLContext(config)
       // } operation: { [self] in
       //   var bytes = _HTMLBuffer()
-      //   try await Self._render(self, into: &bytes)
+      //   try await Self._render(self, into: &bytes, context: context)
       //   return String(decoding: bytes.bytes, as: UTF8.self)
       // }
       ""
@@ -29,7 +29,7 @@
       // try await withDependencies {
       //   $0.htmlContext = HTMLContext(config)
       // } operation: { [self] in
-      //   try await Self._render(self, into: &output)
+      //   try await Self._render(self, into: &output, context: context)
       // }
     }
   }
@@ -52,7 +52,7 @@ extension HTML {
     //   $0.htmlContext = HTMLContext(config)
     // } operation: { [self] in
     //   var bytes = _HTMLBuffer()
-    //   Self._render(self, into: &bytes)
+    //   Self._render(self, into: &bytes, context: context)
     //   return String(decoding: bytes.bytes, as: UTF8.self)
     // }
     ""
@@ -63,7 +63,7 @@ extension HTML {
     // withDependencies {
     //   $0.htmlContext = HTMLContext(config)
     // } operation: { [self] in
-    //   Self._render(self, into: &output)
+    //   Self._render(self, into: &output, context: context)
     // }
   }
 }

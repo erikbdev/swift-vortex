@@ -9,13 +9,12 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
     ) async throws {
-      try await withHTMLContext {
-        html.resolveAttributes(&$0.attributes)
-      } operation: {
-        try await Content._render(html.content, into: &output)
-      }
+      var context = context
+      html.resolveAttributes(&context.attributes)
+      try await Content._render(html.content, into: &output, context: context)
     }
   }
 
@@ -23,13 +22,12 @@
     @_spi(Render)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
     ) {
-      withHTMLContext {
-        html.resolveAttributes(&$0.attributes)
-      } operation: {
-        Content._render(html.content, into: &output)
-      }
+      var context = context
+      html.resolveAttributes(&context.attributes)
+      Content._render(html.content, into: &output, context: context)
     }
   }
 
@@ -63,13 +61,13 @@
     @_spi(Render)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) {
-      withAttributes {
-        html.resolveAttributes(&$0)
-      } operation: {
-        Content._render(html.content, into: &output)
-      }
+      var context = context
+      html.resolveAttributes(&context.attributes)
+      Content._render(html.content, into: &output, context: context)
     }
   }
 

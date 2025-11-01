@@ -16,7 +16,9 @@ struct _HTMLBuffer: HTML, Sendable {
 
     static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       try await output.write(html.bytes)
     }
@@ -26,7 +28,9 @@ struct _HTMLBuffer: HTML, Sendable {
 extension _HTMLBuffer: HTMLOutputStream {
   static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
-    into output: inout Output
+    into output: inout Output,
+    context: HTMLContext
+
   ) {
     output.write(html.bytes)
   }

@@ -7,14 +7,18 @@ public struct EmptyHTML: HTML, Sendable {
   @_spi(Render)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
-    into output: inout Output
+    into output: inout Output,
+    context: HTMLContext
+
   ) {}
 
   #if !hasFeature(Embedded)
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {}
   #endif
 }

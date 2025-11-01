@@ -17,10 +17,12 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       func _render<T: AsyncHTML>(_ html: T) async throws {
-        try await T._render(html, into: &output)
+        try await T._render(html, into: &output, context: context)
       }
       try await _render(html.base)
     }
@@ -44,10 +46,12 @@
     @_spi(Render)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) {
       func _render<T: HTML>(_ html: T) {
-        T._render(html, into: &output)
+        T._render(html, into: &output, context: context)
       }
       _render(html.base)
     }
@@ -55,9 +59,11 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
-      try await AnyAsyncHTML._render(html.eraseToAnyAsyncHTML(), into: &output)
+      try await AnyAsyncHTML._render(html.eraseToAnyAsyncHTML(), into: &output, context: context)
     }
 
     public consuming func eraseToAnyAsyncHTML() -> AnyAsyncHTML {
@@ -83,10 +89,12 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       func _render<T: AsyncHTML>(_ html: T) async throws {
-        try await T._render(html, into: &output)
+        try await T._render(html, into: &output, context: context)
       }
       try await _render(html.base)
     }
@@ -110,10 +118,12 @@
     @_spi(Render)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) {
       func _render<T: HTML>(_ html: T) {
-        T._render(html, into: &output)
+        T._render(html, into: &output, context: context)
       }
       _render(html.base)
     }
@@ -121,10 +131,12 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       func _render<T: HTML>(_ html: T) async throws {
-        try await T._render(html, into: &output)
+        try await T._render(html, into: &output, context: context)
       }
       try await _render(html.base)
     }

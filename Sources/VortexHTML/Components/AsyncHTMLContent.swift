@@ -14,9 +14,11 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
-      try await Content._render(html.content(), into: &output)
+      try await Content._render(html.content(), into: &output, context: context)
     }
   }
 

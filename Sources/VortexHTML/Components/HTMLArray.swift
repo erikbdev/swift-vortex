@@ -8,10 +8,12 @@
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       for element in html.elements {
-        try await Element._render(element, into: &output)
+        try await Element._render(element, into: &output, context: context)
       }
     }
   }
@@ -20,10 +22,12 @@
     @_spi(Render)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) {
       for element in html.elements {
-        Element._render(element, into: &output)
+        Element._render(element, into: &output, context: context)
       }
     }
   }
@@ -35,10 +39,12 @@
     @_spi(Render)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) {
       for element in html.elements {
-        Element._render(element, into: &output)
+        Element._render(element, into: &output, context: context)
       }
     }
   }

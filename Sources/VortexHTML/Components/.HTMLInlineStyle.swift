@@ -32,12 +32,14 @@ public struct HTMLInlineStyle<Content: AsyncHTML>: AsyncHTML {
     @_spi(Render)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     ) async throws {
       // try await withDependencies {
       //   html.resolveStyles(&$0.htmlContext)
       // } operation: {
-      //   try await Content._render(html.content, into: &output)
+      //   try await Content._render(html.content, into: &output, context: context)
       // }
     }
   #endif
@@ -64,7 +66,9 @@ extension HTMLInlineStyle: HTML where Content: HTML {
   @_spi(Render)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
-    into output: inout Output
+    into output: inout Output,
+      context: HTMLContext
+
   ) {
     // withDependencies {
     //   html.resolveStyles(&$0.htmlContext)

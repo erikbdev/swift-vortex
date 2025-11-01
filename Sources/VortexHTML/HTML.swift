@@ -9,7 +9,8 @@
     @_spi(Render)
     static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
     ) async throws
   }
 
@@ -17,16 +18,19 @@
     @_spi(Render)
     static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     )
   }
 
   extension AsyncHTML {
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
     ) async throws {
-      try await Body._render(html.body, into: &output)
+      try await Body._render(html.body, into: &output, context: context)
     }
   }
 #else
@@ -38,7 +42,9 @@
     @_spi(Render)
     static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
+
     )
   }
 #endif
@@ -46,9 +52,11 @@
 extension HTML {
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
-    into output: inout Output
+    into output: inout Output,
+    context: HTMLContext
+
   ) {
-    Body._render(html.body, into: &output)
+    Body._render(html.body, into: &output, context: context)
   }
 }
 
@@ -59,7 +67,8 @@ extension Never: HTML {
     @_spi(Render) @inlinable @inline(__always)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
-      into output: inout Output
+      into output: inout Output,
+      context: HTMLContext
     ) async throws {
     }
   #endif
@@ -67,7 +76,9 @@ extension Never: HTML {
   @_spi(Render) @inlinable @inline(__always)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
-    into output: inout Output
+    into output: inout Output,
+    context: HTMLContext
+
   ) {
   }
 }

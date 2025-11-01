@@ -24,7 +24,7 @@ struct OrderedSet<Element: Hashable>: Equatable, Collection {
   func contains(_ member: Element) -> Bool { set.contains(member) }
 
   @discardableResult
-  mutating func append(_ element: Element) -> Bool { 
+  mutating func append(_ element: Element) -> Bool {
     let inserted = set.insert(element)
     if inserted.inserted {
       array.append(element)
@@ -36,11 +36,11 @@ struct OrderedSet<Element: Hashable>: Equatable, Collection {
 extension OrderedSet: Sendable where Element: Sendable {}
 
 extension OrderedSet: ExpressibleByArrayLiteral {
-    init(arrayLiteral elements: Element...) {
-      self.init(elements)
-    }
+  init(arrayLiteral elements: Element...) {
+    self.init(elements)
+  }
 
-    typealias ArrayLiteralElement = Element
+  typealias ArrayLiteralElement = Element
 }
 
 extension OrderedSet: RandomAccessCollection {

@@ -48,7 +48,7 @@ public struct HTMLBuilder {
     }
   }
 #else
-extension HTMLBuilder {
+  extension HTMLBuilder {
     // @inlinable @inline(__always)
     public static func buildBlock<Content: HTML>(_ component: Content) -> Content {
       component
@@ -87,12 +87,12 @@ extension HTMLBuilder {
     public static func buildArray<Element: HTML>(_ components: [Element]) -> _HTMLArray<Element> {
       _HTMLArray(elements: components)
     }
-    
+
     // @inlinable @inline(__always)
     public static func buildExpression<Content: HTML>(_ component: Content) -> Content {
       component
     }
-}
+  }
 #endif
 
 extension HTMLBuilder {
