@@ -20,7 +20,6 @@
   }
 
   extension HTMLGroup: HTML where Content: HTML {}
-  extension HTMLGroup: Sendable where Content: Sendable {}
 #else
   public struct HTMLGroup<Content: HTML>: HTML {
     @usableFromInline

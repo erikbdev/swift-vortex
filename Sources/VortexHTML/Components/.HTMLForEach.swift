@@ -13,7 +13,7 @@ public struct ForEach<S, Element, Content: AsyncHTML>: AsyncHTML {
   }
 
   #if !hasFeature(Embedded)
-    public init<Awaitable: AsyncHTML>(
+    public init<Awaitable: AsyncHTML & Sendable>(
       _ sequence: S,
       @HTMLBuilder content: @escaping @Sendable (S.Element) async throws -> Awaitable
     ) where S: Sequence, S.Element == Element, Element: Sendable, Content == AsyncHTMLContent<Awaitable> {
@@ -32,7 +32,7 @@ public struct ForEach<S, Element, Content: AsyncHTML>: AsyncHTML {
   }
 
   #if !hasFeature(Embedded)
-    public init<Awaitable: AsyncHTML>(
+    public init<Awaitable: AsyncHTML & Sendable>(
       _ sequence: S,
       @HTMLBuilder content: @escaping @Sendable (S.Element) async throws -> Awaitable
     ) where S: AsyncSequence, S.Element == Element, Element: Sendable, Content == AsyncHTMLContent<Awaitable> {
@@ -48,7 +48,6 @@ public struct ForEach<S, Element, Content: AsyncHTML>: AsyncHTML {
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       if let sequence = html.sequence as? any Sequence<Element> {
         for element in sequence {

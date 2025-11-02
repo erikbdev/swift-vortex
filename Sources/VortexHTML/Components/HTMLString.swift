@@ -37,11 +37,10 @@ public struct HTMLString: HTML, Sendable {
     _ html: consuming Self,
     into output: inout Output,
     context: HTMLContext
-
   ) {
-    // var buffer = Data()
-    // html.renderBytes(&buffer)
-    // output.write(buffer)
+    var buffer: [UInt8] = []
+    html.renderBytes(&buffer)
+    output.write(buffer)
   }
 
   #if !hasFeature(Embedded)
@@ -50,11 +49,10 @@ public struct HTMLString: HTML, Sendable {
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
-      // var buffer = Data()
-      // html.renderBytes(&buffer)
-      // try await output.write(buffer)
+      var buffer: [UInt8] = []
+      html.renderBytes(&buffer)
+      try await output.write(buffer)
     }
   #endif
 
@@ -72,22 +70,6 @@ public struct HTMLString: HTML, Sendable {
             buffer.append(byte)
           }
         }
-      // case .html(let html):
-      //   withUnsafeMutablePointer(to: &output) { output in
-      //     var proxy = _HTMLByteStreamProxy { bytes in
-      //       for byte in bytes {
-      //         switch byte {
-      //         case 0x26 where value.escape:  // &
-      //           output.pointee.write("&amp;".utf8)
-      //         case 0x3C where value.escape:  // <
-      //           output.pointee.write("&lt;".utf8)
-      //         default:
-      //           output.pointee.write(byte)
-      //         }
-      //       }
-      //     }
-      //     AnySendableHTML._render(html, into: &proxy, context: context)
-      //   }
       }
     }
   }
@@ -135,18 +117,6 @@ extension HTMLString {
       self._storage = stringInterpolation._storage
     }
   }
-
-// private struct _HTMLByteStreamProxy: HTMLByteStream {
-//   let callback: (ContiguousArray<UInt8>) -> Void
-
-//   mutating func write(_ byte: consuming UInt8) {
-//     callback(ContiguousArray(arrayLiteral: byte))
-//   }
-
-//   mutating func write(_ bytes: consuming some Sequence<UInt8>) {
-//     callback(ContiguousArray(bytes))
-//   }
-// }
 
 // Result builder
 // extension HTMLString {

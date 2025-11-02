@@ -1,4 +1,4 @@
-#if !hasFeature(Embedded)
+#if !hasFeature(Embedded) && canImport(Markdown)
   import Markdown
 
   public struct HTMLMarkdown: HTML, Sendable, ExpressibleByStringLiteral {

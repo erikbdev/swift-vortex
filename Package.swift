@@ -22,7 +22,7 @@ let package = Package(
     ),
     .testTarget(
       name: "VortexTests",
-      dependencies: ["Vortex"]
+      dependencies: ["VortexDOM"]
     )
   ]
 )

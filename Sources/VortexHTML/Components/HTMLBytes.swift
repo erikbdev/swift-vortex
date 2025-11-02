@@ -1,5 +1,5 @@
 struct _HTMLBuffer: HTML, Sendable {
-  var bytes: [UInt8] = []
+  var bytes: ContiguousArray<UInt8> = []
 
   var body: Never { fatalError() }
 

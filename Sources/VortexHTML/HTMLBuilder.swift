@@ -60,13 +60,13 @@ public struct HTMLBuilder {
     }
 
     // @inlinable @inline(__always)
-    public static func buildBlock<H0: HTML, H1: HTML>(_ h0: H0, _ h1: H1) -> HTMLTuple<(H0, H1)> {
-      HTMLTuple((h0, h1))
+    public static func buildBlock<H0: HTML, H1: HTML>(_ h0: H0, _ h1: H1) -> HTMLTuple2<H0, H1> {
+      HTMLTuple2(content: (h0, h1))
     }
 
     // @inlinable @inline(__always)
-    public static func buildBlock<H0: HTML, H1: HTML, H2: HTML>(_ h0: H0, _ h1: H1, _ h2: H2) -> HTMLTuple<(H0, H1, H2)> {
-      HTMLTuple((h0, h1, h2))
+    public static func buildBlock<H0: HTML, H1: HTML, H2: HTML>(_ h0: H0, _ h1: H1, _ h2: H2) -> HTMLTuple3<H0, H1, H2> {
+      HTMLTuple3(content: (h0, h1, h2))
     }
 
     // @inlinable @inline(__always)

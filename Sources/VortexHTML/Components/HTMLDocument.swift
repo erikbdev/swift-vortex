@@ -19,9 +19,7 @@
       _ document: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
-      //   @Dependency(\.htmlContext) var context
       //
       //   let documentBody: _HTMLConditional<_HTMLBuffer, Body>
       //   let stylesheet: String

@@ -3,7 +3,6 @@ public struct HTMLDoctype: HTML, Sendable {
   public init() {}
 
   public var body: HTMLString {
-    EmptyHTML()
-    // HTMLRaw("<!doctype html>")
+    HTMLRaw("<!doctype html>")
   }
 }
