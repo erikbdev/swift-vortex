@@ -1,8 +1,8 @@
 @propertyWrapper
-public struct State<Value> {
+public struct Signal<Value> {
   private var initialValue: Value
   public var wrappedValue: Value {
-    get { fatalError() }
+    get { initialValue }
     nonmutating set {}
   }
 

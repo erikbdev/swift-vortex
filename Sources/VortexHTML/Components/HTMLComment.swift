@@ -16,11 +16,10 @@ public struct HTMLComment: HTML, Sendable {
     _ html: consuming HTMLComment,
     into output: inout Output,
     context: HTMLContext
-
   ) {
-    // output.write(start)
-    // HTMLString._render(HTMLString(html.text), into: &output, context: context)  // comment
-    // output.write(end)
+    output.write(start)
+    HTMLString._render(HTMLString(html.text), into: &output, context: context)  // comment
+    output.write(end)
   }
 
   #if !hasFeature(Embedded)
@@ -29,11 +28,10 @@ public struct HTMLComment: HTML, Sendable {
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
-      // try await output.write(start)
-      // try await HTMLString._render(HTMLString(html.text), into: &output, context: context)  // comment
-      // try await output.write(end)
+      try await output.write(start)
+      try await HTMLString._render(HTMLString(html.text), into: &output, context: context)  // comment
+      try await output.write(end)
     }
   #endif
 }

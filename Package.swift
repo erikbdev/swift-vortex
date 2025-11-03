@@ -10,19 +10,11 @@ let package = Package(
   dependencies: [],
   targets: [
     .target(
-      name: "Vortex",
-      dependencies: ["VortexHTML"]
-    ),
-    .target(
       name: "VortexHTML", 
-    ),
-    .target(
-      name: "VortexDOM",
-      dependencies: ["Vortex"]
     ),
     .testTarget(
       name: "VortexTests",
-      dependencies: ["VortexDOM"]
+      dependencies: ["VortexHTML"]
     )
   ]
 )

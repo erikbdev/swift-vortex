@@ -24,6 +24,6 @@ extension HTMLAttribute.Aria {
     name: String,
     value: String? = ""
   ) -> HTMLAttribute {
-    .init(name: "aria-\(name)", value: value)
+    HTMLAttribute(name: "aria-\(name)", value: value)
   }
 }

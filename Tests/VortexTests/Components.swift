@@ -1,32 +1,27 @@
-import VortexDOM
+import VortexHTML
 
-struct DemoOne: HTML {
-  @State var count = 0
-  @State var text: String?
+struct CounterDemo: HTML {
+  @Signal var count = 0
 
   var body: some HTML {
-    if count < 5 {
-      p {
-        "Value: " 
-        count.description 
-      }
-      button {
-        "Increment"
-      }
-      .on(.click) { count += 1 }
-      button {
-        "Decrement"
-      }
-      .on(.click) { count -= 1 }
-    } else {
-      p { "Finished counter: \(count)" }
-    }
-
-    if let text {
-      p { "Hello, \(text)" }
+    div {
+      button { "+" }
+        .on(.click) {
+          count += 1
+        } 
+      p { count.description }
     }
   }
 
-  mutating func _$reactiveBody() {
+  func _$reactive() {
+    var count = Signal(wrappedValue: self.count)
+
+    div { 
+      button { "+" }
+      .on(.click) {
+        count += 1
+      }
+      p { count.description }
+    }
   }
 }

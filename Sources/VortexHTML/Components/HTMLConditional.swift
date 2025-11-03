@@ -53,7 +53,7 @@
 #endif
 
 extension _HTMLConditional {
-  @inlinable @inline(__always)
+  // @inlinable @inline(__always)
   public var body: Never { fatalError() }
 }
 

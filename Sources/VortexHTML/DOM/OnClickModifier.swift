@@ -1,17 +1,10 @@
-@_spi(Render) import VortexHTML
-
-public struct Event: Sendable {
-  public static let click = Event()
-  public static let hover = Event()
-}
-
 extension HTML {
-  public func on(_ event: Event, _ operation: @escaping () -> Void) -> some HTML {
+  public func on<Event: HTMLEvent>(_ event: Event, _ operation: @escaping () -> Void) -> some HTML {
     OnEventModifier(content: self, event: event, operation: operation)
   }
 }
 
-struct OnEventModifier<Content> {
+struct OnEventModifier<Event: HTMLEvent, Content> {
   var content: Content
   var event: Event
   var operation: () -> Void
@@ -40,3 +33,5 @@ extension OnEventModifier: HTML where Content: HTML {
     Content._render(html.content, into: &output, context: context)
   }
 }
+
+// extension OnEventModifier: ReactiveHTML where Content: ReactiveHTML {}
