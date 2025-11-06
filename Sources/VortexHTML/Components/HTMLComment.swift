@@ -11,7 +11,7 @@ public struct HTMLComment: HTML, Sendable {
   private static let start: [UInt8] = [0x3C, 0x21, 0x2D, 0x2D]  // <!--
   private static let end: [UInt8] = [0x2D, 0x2D, 0x3E]  // -->
 
-  @_spi(Render)
+  @_spi(Internals)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming HTMLComment,
     into output: inout Output,
@@ -23,7 +23,7 @@ public struct HTMLComment: HTML, Sendable {
   }
 
   #if !hasFeature(Embedded)
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,

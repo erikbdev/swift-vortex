@@ -32,7 +32,7 @@ public struct HTMLString: HTML, Sendable {
     self._storage = [StorageValue(bytes, escape: escape)]
   }
 
-  @_spi(Render)
+  @_spi(Internals)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
     into output: inout Output,
@@ -44,7 +44,7 @@ public struct HTMLString: HTML, Sendable {
   }
 
   #if !hasFeature(Embedded)
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,

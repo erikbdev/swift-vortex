@@ -3,7 +3,7 @@
     case trueContent(TrueContent)
     case falseContent(FalseContent)
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -18,7 +18,7 @@
   }
 
   extension _HTMLConditional: HTML where TrueContent: HTML, FalseContent: HTML {
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -37,7 +37,7 @@
     case trueContent(TrueContent)
     case falseContent(FalseContent)
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,

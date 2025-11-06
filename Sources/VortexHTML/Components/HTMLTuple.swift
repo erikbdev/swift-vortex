@@ -11,7 +11,7 @@
       self.content = (repeat each content)
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -27,7 +27,7 @@
   }
 
   extension HTMLTuple: HTML where repeat each Content: HTML {
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -49,7 +49,7 @@
 
     public var body: Never { fatalError() }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -65,7 +65,7 @@
 
     public var body: Never { fatalError() }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,

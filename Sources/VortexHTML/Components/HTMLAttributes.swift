@@ -6,7 +6,7 @@
     // @usableFromInline
     let content: Content
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -19,7 +19,7 @@
   }
 
   extension HTMLAttributes: HTML where Content: HTML {
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -58,7 +58,7 @@
     // @usableFromInline
     let content: Content
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,

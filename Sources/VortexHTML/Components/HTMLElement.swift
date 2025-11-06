@@ -11,7 +11,7 @@
       self.content = AsyncHTMLContent(content: content)
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -37,7 +37,7 @@
   }
 
   extension HTMLElement: HTML where Content: HTML {
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -67,7 +67,7 @@
 
     let content: Content
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -114,7 +114,7 @@ public struct HTMLVoidElement: HTML, Sendable {
     self.tag = tag
   }
 
-  @_spi(Render)
+  @_spi(Internals)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
     into writer: inout Output,
@@ -154,7 +154,7 @@ public struct HTMLVoidElement: HTML, Sendable {
   }
 
   #if !hasFeature(Embedded)
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,

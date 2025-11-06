@@ -43,7 +43,7 @@ public struct ForEach<S, Element, Content: AsyncHTML>: AsyncHTML {
   #endif
 
   #if !hasFeature(Embedded)
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -66,7 +66,7 @@ public struct ForEach<S, Element, Content: AsyncHTML>: AsyncHTML {
 }
 
 extension ForEach: HTML where S: Sequence, S.Element == Element, Content: HTML {
-  @_spi(Render)
+  @_spi(Internals)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
     into output: inout Output,

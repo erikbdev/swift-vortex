@@ -1,4 +1,8 @@
 extension HTML {
+  public func on<Event: HTMLEvent>(_ event: Event, _ operation: @autoclosure @escaping () -> Void) -> some HTML {
+    OnEventModifier(content: self, event: event, operation: operation)
+  }
+ 
   public func on<Event: HTMLEvent>(_ event: Event, _ operation: @escaping () -> Void) -> some HTML {
     OnEventModifier(content: self, event: event, operation: operation)
   }

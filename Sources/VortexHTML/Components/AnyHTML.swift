@@ -14,7 +14,7 @@
       }
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -43,7 +43,7 @@
       }
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -56,7 +56,7 @@
       _render(html.base)
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -86,7 +86,7 @@
       }
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -115,7 +115,7 @@
       }
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: HTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -128,7 +128,7 @@
       _render(html.base)
     }
 
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,

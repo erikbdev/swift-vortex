@@ -6,7 +6,7 @@
   }
 
   extension HTMLDocument {
-    @_spi(Render)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ document: consuming Self,
       into output: inout Output,
@@ -39,7 +39,7 @@
 #endif
 
 extension HTMLDocument where Head: HTML, Body: HTML {
-  @_spi(Render)
+  @_spi(Internals)
   public static func _render<Output: HTMLOutputStream>(
     _ document: consuming Self,
     into output: inout Output,
