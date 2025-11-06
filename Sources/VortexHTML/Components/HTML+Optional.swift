@@ -7,7 +7,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       if case .some(let html) = html {
         try await Wrapped._render(html, into: &output, context: context)
@@ -24,7 +23,6 @@ extension Optional: HTML where Wrapped: HTML {
     _ html: consuming Self,
     into output: inout Output,
     context: HTMLContext
-
   ) {
     if case .some(let html) = html {
       Wrapped._render(html, into: &output, context: context)

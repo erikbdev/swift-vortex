@@ -18,7 +18,6 @@ struct _HTMLBuffer: HTML, Sendable {
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       try await output.write(html.bytes)
     }
@@ -30,7 +29,6 @@ extension _HTMLBuffer: HTMLOutputStream {
     _ html: consuming Self,
     into output: inout Output,
     context: HTMLContext
-
   ) {
     output.write(html.bytes)
   }

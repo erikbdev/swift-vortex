@@ -10,7 +10,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       for element in html.elements {
         try await Element._render(element, into: &output, context: context)
@@ -24,7 +23,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) {
       for element in html.elements {
         Element._render(element, into: &output, context: context)
@@ -41,7 +39,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) {
       for element in html.elements {
         Element._render(element, into: &output, context: context)

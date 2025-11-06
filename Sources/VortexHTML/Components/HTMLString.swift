@@ -12,22 +12,18 @@ public struct HTMLString: HTML, Sendable {
 
   public var body: Never { fatalError() }
 
-  @inlinable @inline(__always)
   public init(stringLiteral value: consuming String) {
     self.init(value)
   }
 
-  @inlinable @inline(__always)
   public init(raw string: consuming String) {
     self.init(string.utf8, escape: false)
   }
 
-  @inlinable @inline(__always)
   public init(_ string: consuming String) {
     self.init(string.utf8, escape: true)
   }
 
-  @usableFromInline
   init(_ bytes: consuming some Sequence<UInt8>, escape: Bool) {
     self._storage = [StorageValue(bytes, escape: escape)]
   }

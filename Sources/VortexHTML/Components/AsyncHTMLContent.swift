@@ -22,7 +22,7 @@
     }
   }
 
-  @available(*, unavailable, message: "'AsyncHTMLContent' cannot run in synchronous context.")
+  @available(*, unavailable, message: "'AsyncHTMLContent' cannot execute in synchronous context.")
   extension AsyncHTMLContent: HTML where Content: HTML {}
 
   extension AsyncHTMLContent: Sendable where Content: Sendable {}

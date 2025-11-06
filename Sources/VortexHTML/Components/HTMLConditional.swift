@@ -8,7 +8,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       switch html {
       case .trueContent(let html): try await TrueContent._render(html, into: &output, context: context)
@@ -23,7 +22,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) {
       switch html {
       case .trueContent(let html): TrueContent._render(html, into: &output, context: context)
@@ -42,7 +40,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) {
       switch html {
       case .trueContent(let html): TrueContent._render(html, into: &output, context: context)
@@ -53,7 +50,6 @@
 #endif
 
 extension _HTMLConditional {
-  // @inlinable @inline(__always)
   public var body: Never { fatalError() }
 }
 

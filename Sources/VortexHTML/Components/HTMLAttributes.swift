@@ -1,9 +1,6 @@
 #if !hasFeature(Embedded)
   public struct HTMLAttributes<Content: AsyncHTML>: AsyncHTML {
-    // @usableFromInline
     var attributes: OrderedSet<HTMLAttribute>
-
-    // @usableFromInline
     let content: Content
 
     @_spi(Internals)
@@ -52,10 +49,7 @@
   }
 #else
   public struct HTMLAttributes<Content: HTML>: HTML {
-    // @usableFromInline
     var attributes: OrderedSet<HTMLAttribute>
-
-    // @usableFromInline
     let content: Content
 
     @_spi(Internals)
@@ -95,13 +89,6 @@
 extension HTMLAttributes {
   public var body: Never { fatalError() }
 
-  // @inlinable @inline(__always)
-  // // public init(attributes: OrderedSet<HTMLAttribute>, content: Content) {
-  // //   self.content = content
-  // //   self.attributes = attributes
-  // }
-
-  // @inlinable @inline(__always)
   public func attribute(
     _ name: String,
     value: String? = "",
@@ -112,7 +99,6 @@ extension HTMLAttributes {
     return copy
   }
 
-  // @inlinable @inline(__always)
   public func attribute(_ attribute: HTMLAttribute) -> Self {
     var copy = self
     copy.attributes.append(attribute)

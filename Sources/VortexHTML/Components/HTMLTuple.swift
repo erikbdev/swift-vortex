@@ -1,12 +1,9 @@
 #if !hasFeature(Embedded)
   public struct HTMLTuple<each Content: AsyncHTML>: AsyncHTML {
-    @usableFromInline
     let content: (repeat each Content)
 
-    @inlinable @inline(__always)
     public var body: Never { fatalError() }
 
-    @inlinable @inline(__always)
     public init(_ content: repeat each Content) {
       self.content = (repeat each content)
     }
@@ -74,6 +71,24 @@
       H0._render(html.content.0, into: &output, context: context)
       H1._render(html.content.1, into: &output, context: context)
       H2._render(html.content.2, into: &output, context: context)
+    }
+  }
+
+  public struct HTMLTuple4<H0: HTML, H1: HTML, H2: HTML, H3: HTML>: HTML {
+    let content: (H0, H1, H2, H3)
+
+    public var body: Never { fatalError() }
+
+    @_spi(Internals)
+    public static func _render<Output: HTMLOutputStream>(
+      _ html: consuming Self,
+      into output: inout Output,
+      context: HTMLContext
+    ) {
+      H0._render(html.content.0, into: &output, context: context)
+      H1._render(html.content.1, into: &output, context: context)
+      H2._render(html.content.2, into: &output, context: context)
+      H3._render(html.content.3, into: &output, context: context)
     }
   }
 #endif

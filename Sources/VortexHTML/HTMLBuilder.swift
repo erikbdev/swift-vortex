@@ -69,6 +69,10 @@ public struct HTMLBuilder {
       HTMLTuple3(content: (h0, h1, h2))
     }
 
+    public static func buildBlock<H0: HTML, H1: HTML, H2: HTML, H3: HTML>(_ h0: H0, _ h1: H1, _ h2: H2, _ h3: H3) -> HTMLTuple4<H0, H1, H2, H3> {
+      HTMLTuple4(content: (h0, h1, h2, h3))
+    }
+
     // @inlinable @inline(__always)
     public static func buildEither<TrueContent: HTML, FalseContent: HTML>(first component: TrueContent) -> _HTMLConditional<
       TrueContent, FalseContent

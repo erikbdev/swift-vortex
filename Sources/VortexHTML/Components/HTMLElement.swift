@@ -16,7 +16,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       try await HTMLVoidElement._render(
         HTMLVoidElement(tag: html.tag),
@@ -42,7 +41,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) {
       HTMLVoidElement._render(
         HTMLVoidElement(tag: html.tag),
@@ -72,7 +70,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) {
       HTMLVoidElement._render(
         HTMLVoidElement(tag: html.tag),
@@ -119,7 +116,6 @@ public struct HTMLVoidElement: HTML, Sendable {
     _ html: consuming Self,
     into writer: inout Output,
     context: HTMLContext
-
   ) {
     var buffer: [UInt8] = []
     html.writeBytes(&buffer, context: context)
@@ -159,7 +155,6 @@ public struct HTMLVoidElement: HTML, Sendable {
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       var buffer: [UInt8] = []
       html.writeBytes(&buffer, context: context)

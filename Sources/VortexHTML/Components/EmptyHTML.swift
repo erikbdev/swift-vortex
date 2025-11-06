@@ -9,7 +9,6 @@ public struct EmptyHTML: HTML, Sendable {
     _ html: consuming Self,
     into output: inout Output,
     context: HTMLContext
-
   ) {}
 
   #if !hasFeature(Embedded)
@@ -18,7 +17,6 @@ public struct EmptyHTML: HTML, Sendable {
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {}
   #endif
 }
