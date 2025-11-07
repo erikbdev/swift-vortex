@@ -1,10 +1,7 @@
 #if !hasFeature(Embedded)
   public struct _HTMLArray<Element: AsyncHTML>: AsyncHTML {
-    // @usableFromInline
     let elements: [Element]
-  }
 
-  extension _HTMLArray {
     @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
@@ -50,11 +47,9 @@
 extension _HTMLArray {
   public var body: Never { fatalError() }
 
-  // @inlinable @inline(__always)
-  // public init(elements: [Element]) {
+  // public init(_ elements: [Element]) {
   //   self.elements = elements
   // }
-
 }
 
-// extension _HTMLArray: Sendable where Element: Sendable {}
+extension _HTMLArray: Sendable where Element: Sendable {}

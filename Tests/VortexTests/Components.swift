@@ -27,13 +27,3 @@ struct FactDemo: AsyncHTML {
     return Int.random(in: 0..<10_000)
   }
 }
-
-private func test3() {
-  let count = Signal(0)
-  let app = div {
-    button { "+" }
-      .on(.click, count += 1) 
-  }
-
-  // app.mount()
-}

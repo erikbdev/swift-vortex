@@ -1,12 +1,9 @@
 #if !hasFeature(Embedded)
   public struct AsyncHTMLContent<Content: AsyncHTML>: AsyncHTML {
-    @usableFromInline
     let content: @Sendable () async throws -> Content
 
-    @inlinable @inline(__always)
     public var body: Never { fatalError() }
 
-    @inlinable @inline(__always)
     public init(@HTMLBuilder content: @escaping @Sendable () async throws -> Content) {
       self.content = content
     }
@@ -16,7 +13,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) async throws {
       try await Content._render(html.content(), into: &output, context: context)
     }

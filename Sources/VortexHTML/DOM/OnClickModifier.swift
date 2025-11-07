@@ -37,5 +37,3 @@ extension OnEventModifier: HTML where Content: HTML {
     Content._render(html.content, into: &output, context: context)
   }
 }
-
-// extension OnEventModifier: ReactiveHTML where Content: ReactiveHTML {}

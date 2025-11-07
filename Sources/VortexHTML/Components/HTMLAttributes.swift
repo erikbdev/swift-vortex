@@ -57,7 +57,6 @@
       _ html: consuming Self,
       into output: inout Output,
       context: HTMLContext
-
     ) {
       var context = context
       html.resolveAttributes(&context.attributes)

@@ -3,15 +3,7 @@ public struct HTMLAttribute: Hashable, Sendable {
   public let value: String?
   public let mergeMode: MergeMode
 
-  // @inlinable @inline(__always)
   public init(name: String, value: String? = "", mergeMode: MergeMode = .replaceValue) {
-    self.name = name
-    self.value = value
-    self.mergeMode = mergeMode
-  }
-
-  // @usableFromInline
-  init(_ name: String = #function, value: String? = "", mergeMode: MergeMode = .replaceValue) {
     self.name = name
     self.value = value
     self.mergeMode = mergeMode
@@ -35,21 +27,21 @@ extension HTMLAttribute {
     Self(name: name, value: value)
   }
 
-  public static var id: Self { Self() }
+  public static var id: Self { Self(name: "id") }
 
-  public static var `class`: Self { Self() }
+  public static var `class`: Self { Self(name: "class") }
 
-  public static var style: Self { Self() }
+  public static var style: Self { Self(name: "style") }
 
   public static func data(_ key: String, value: String) -> Self {
     Self(name: "data-" + key, value: value)
   }
 
-  public static var title: Self { Self() }
+  public static var title: Self { Self(name: "title") }
 
-  public static var lang: Self { Self() }
+  public static var lang: Self { Self(name: "lang") }
 
-  public static var hidden: Self { Self() }
+  public static var hidden: Self { Self(name: "hidden") }
 
   public static func tabIndex(_ index: Int) -> Self {
     Self(name: "tabindex", value: "\(index)")

@@ -53,4 +53,4 @@ extension _HTMLConditional {
   public var body: Never { fatalError() }
 }
 
-// extension _HTMLConditional: Sendable where TrueContent: Sendable, FalseContent: Sendable {}
+extension _HTMLConditional: Sendable where TrueContent: Sendable, FalseContent: Sendable {}
