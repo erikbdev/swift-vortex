@@ -1,5 +1,3 @@
-// import OrderedCollections
-
 public struct HTMLTag: Hashable, Sendable {
   public let rawValue: String
 
@@ -10,110 +8,95 @@ public struct HTMLTag: Hashable, Sendable {
     public typealias Closure<Content: HTML> = () -> Content
   #endif
 
-  // @inlinable @inline(__always)
   public init(_ rawValue: String) {
     self.rawValue = rawValue
   }
 
-  // @inlinable @inline(__always)
-  @_disfavoredOverload
   public func callAsFunction() -> HTMLElement<EmptyHTML> {
     HTMLElement(tag: rawValue, content: EmptyHTML.init)
   }
 
-  // @inlinable @inline(__always)
-  // @_disfavoredOverload
-  // public func callAsFunction(_ attributes: HTMLAttribute...) -> HTMLAttributes<HTMLElement<EmptyHTML>> {
-  //   self.callAsFunction(attributes: attributes)
-  // }
+  @_disfavoredOverload
+  public func callAsFunction(_ attributes: HTMLAttribute...) -> HTMLAttributes<HTMLElement<EmptyHTML>> {
+    self.callAsFunction(attributes: attributes)
+  }
 
-  // // @inlinable @inline(__always)
-  // public func callAsFunction(attributes: [HTMLAttribute]) -> HTMLAttributes<HTMLElement<EmptyHTML>> {
-  //   HTMLAttributes(
-  //     attributes: .init(attributes),
-  //     content: HTMLElement(tag: rawValue, content: EmptyHTML.init)
-  //   )
-  // }
+  public func callAsFunction(attributes: [HTMLAttribute]) -> HTMLAttributes<HTMLElement<EmptyHTML>> {
+    HTMLAttributes(
+      attributes: .init(attributes),
+      content: HTMLElement(tag: rawValue, content: EmptyHTML.init)
+    )
+  }
 
-  // @inlinable @inline(__always)
   public func callAsFunction<Content: HTML>(@HTMLBuilder content: Closure<Content>) -> HTMLElement<Content> {
     HTMLElement(tag: rawValue, content: content)
   }
 
-  // @inlinable @inline(__always)
-  // @_disfavoredOverload
-  // public func callAsFunction<Content: HTML>(
-  //   _ attributes: HTMLAttribute...,
-  //   @HTMLBuilder content: Closure<Content>
-  // ) -> HTMLAttributes<HTMLElement<Content>> {
-  //   self.callAsFunction(attributes: attributes, content: content)
-  // }
+  @_disfavoredOverload
+  public func callAsFunction<Content: HTML>(
+    _ attributes: HTMLAttribute...,
+    @HTMLBuilder content: Closure<Content>
+  ) -> HTMLAttributes<HTMLElement<Content>> {
+    self.callAsFunction(attributes: attributes, content: content)
+  }
 
-  // @inlinable @inline(__always)
-  // public func callAsFunction<Content: HTML>(
-  //   attributes: [HTMLAttribute],
-  //   @HTMLBuilder content: Closure<Content>
-  // ) -> HTMLAttributes<HTMLElement<Content>> {
-  //   HTMLAttributes(
-  //     attributes: .init(attributes),
-  //     content: HTMLElement(tag: rawValue, content: content)
-  //   )
-  // }
+  public func callAsFunction<Content: HTML>(
+    attributes: [HTMLAttribute],
+    @HTMLBuilder content: Closure<Content>
+  ) -> HTMLAttributes<HTMLElement<Content>> {
+    HTMLAttributes(
+      attributes: .init(attributes),
+      content: HTMLElement(tag: rawValue, content: content)
+    )
+  }
 
   #if !hasFeature(Embedded)
-    // @inlinable @inline(__always)
     public func callAsFunction<Content: AsyncHTML>(@HTMLBuilder content: @escaping AsyncClosure<Content>) -> HTMLElement<AsyncHTMLContent<Content>> {
       HTMLElement(tag: rawValue, content: content)
     }
 
-  // @inlinable @inline(__always)
-  // @_disfavoredOverload
-  // public func callAsFunction<Content: AsyncHTML>(
-  //   _ attributes: HTMLAttribute...,
-  //   @HTMLBuilder content: @escaping AsyncClosure<Content>
-  // ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
-  //   self.callAsFunction(attributes: attributes, content: content)
-  // }
+    @_disfavoredOverload
+    public func callAsFunction<Content: AsyncHTML>(
+      _ attributes: HTMLAttribute...,
+      @HTMLBuilder content: @escaping AsyncClosure<Content>
+    ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
+      self.callAsFunction(attributes: attributes, content: content)
+    }
 
-  // // @inlinable @inline(__always)
-  // public func callAsFunction<Content: AsyncHTML>(
-  //   attributes: [HTMLAttribute],
-  //   @HTMLBuilder content: @escaping AsyncClosure<Content>
-  // ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
-  //   HTMLAttributes(
-  //     attributes: .init(attributes),
-  //     content: HTMLElement(tag: rawValue, content: content)
-  //   )
-  // }
+    public func callAsFunction<Content: AsyncHTML>(
+      attributes: [HTMLAttribute],
+      @HTMLBuilder content: @escaping AsyncClosure<Content>
+    ) -> HTMLAttributes<HTMLElement<AsyncHTMLContent<Content>>> {
+      HTMLAttributes(
+        attributes: .init(attributes),
+        content: HTMLElement(tag: rawValue, content: content)
+      )
+    }
   #endif
 }
 
 public struct HTMLVoidTag: Hashable, Sendable {
   public let rawValue: String
 
-  // @inlinable @inline(__always)
   public init(_ tag: String) {
     rawValue = tag
   }
 
-  // @inlinable @inline(__always)
   public func callAsFunction() -> HTMLVoidElement {
     HTMLVoidElement(tag: rawValue)
   }
 
-  // @inlinable @inline(__always)
-  // @_disfavoredOverload
-  // public func callAsFunction(_ attributes: HTMLAttribute...) -> HTMLAttributes<HTMLVoidElement> {
-  //   self.callAsFunction(attributes: attributes)
-  // }
+  @_disfavoredOverload
+  public func callAsFunction(_ attributes: HTMLAttribute...) -> HTMLAttributes<HTMLVoidElement> {
+    self.callAsFunction(attributes: attributes)
+  }
 
-  // // @inlinable @inline(__always)
-  // public func callAsFunction(attributes: [HTMLAttribute]) -> HTMLAttributes<HTMLVoidElement> {
-  //   HTMLAttributes(
-  //     attributes: .init(attributes),
-  //     content: HTMLVoidElement(tag: rawValue)
-  //   )
-  // }
+  public func callAsFunction(attributes: [HTMLAttribute]) -> HTMLAttributes<HTMLVoidElement> {
+    HTMLAttributes(
+      attributes: .init(attributes),
+      content: HTMLVoidElement(tag: rawValue)
+    )
+  }
 }
 
 public typealias tag = HTMLTag

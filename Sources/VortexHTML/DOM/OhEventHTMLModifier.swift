@@ -1,14 +1,14 @@
 extension HTML {
   public func on<Event: HTMLEvent>(_ event: Event, _ operation: @autoclosure @escaping () -> Void) -> some HTML {
-    OnEventModifier(content: self, event: event, operation: operation)
+    _OnEventHTMLModifier(content: self, event: event, operation: operation)
   }
  
   public func on<Event: HTMLEvent>(_ event: Event, _ operation: @escaping () -> Void) -> some HTML {
-    OnEventModifier(content: self, event: event, operation: operation)
+    _OnEventHTMLModifier(content: self, event: event, operation: operation)
   }
 }
 
-struct OnEventModifier<Event: HTMLEvent, Content> {
+struct _OnEventHTMLModifier<Event: HTMLEvent, Content> {
   var content: Content
   var event: Event
   var operation: () -> Void
@@ -17,7 +17,7 @@ struct OnEventModifier<Event: HTMLEvent, Content> {
 }
 
 #if !hasFeature(Embedded)
-  extension OnEventModifier: AsyncHTML where Content: AsyncHTML {
+  extension _OnEventHTMLModifier: AsyncHTML where Content: AsyncHTML {
     static func _render<Output>(
       _ html: consuming Self,
       into output: inout Output,
@@ -28,7 +28,7 @@ struct OnEventModifier<Event: HTMLEvent, Content> {
   }
 #endif
 
-extension OnEventModifier: HTML where Content: HTML {
+extension _OnEventHTMLModifier: HTML where Content: HTML {
   static func _render<Output>(
     _ html: consuming Self,
     into output: inout Output,
@@ -37,3 +37,7 @@ extension OnEventModifier: HTML where Content: HTML {
     Content._render(html.content, into: &output, context: context)
   }
 }
+
+#if canImport(JavaScriptKit) && os(WASI)
+extension _OnEventHTMLModifier {}
+#endif

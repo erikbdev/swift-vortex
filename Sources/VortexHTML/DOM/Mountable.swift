@@ -1,4 +1,4 @@
-#if os(WASI) 
+#if canImport(JavaScriptKit) && os(WASI)
 extension HTML {
   func mount() { }
 
@@ -7,6 +7,10 @@ extension HTML {
   }
 
   func onUnmounted(_ operation: @escaping () -> Void) -> some HTML {
+    self
+  }
+
+  func effect(_ operation: @escaping () -> Void) -> some HTML {
     self
   }
 }

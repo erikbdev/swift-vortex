@@ -10,7 +10,6 @@
   }
 
   extension AsyncHTML {
-    @inline(__always)
     public consuming func render(_ config: HTMLContext.Configuration = .minified) async throws -> String {
       let context = HTMLContext(config)
       var bytes = _HTMLBuffer()
@@ -18,7 +17,6 @@
       return String(decoding: bytes.bytes, as: UTF8.self)
     }
 
-    @inline(__always)
     public consuming func render<Output: AsyncHTMLOutputStream>(_ config: HTMLContext.Configuration = .minified, into output: inout Output)
       async throws
     {
@@ -39,7 +37,6 @@ extension HTMLOutputStream {
 }
 
 extension HTML {
-  @inline(__always)
   public consuming func render(_ config: HTMLContext.Configuration = .minified) -> String {
     let context = HTMLContext(config)
     var bytes = _HTMLBuffer()
@@ -47,7 +44,6 @@ extension HTML {
     return String(decoding: bytes.bytes, as: UTF8.self)
   }
 
-  @inline(__always)
   public consuming func render<Output: HTMLOutputStream>(_ config: HTMLContext.Configuration = .minified, into output: inout Output) {
     let context = HTMLContext(config)
     Self._render(self, into: &output, context: context)

@@ -44,6 +44,9 @@
       into output: inout Output,
       context: HTMLContext
     )
+
+    #if canImport(JavaScriptKit)
+    #endif
   }
 #endif
 
@@ -62,7 +65,7 @@ extension Never: HTML {
   public var body: Never { fatalError() }
 
   #if !hasFeature(Embedded)
-    @_spi(Internals) @inlinable @inline(__always)
+    @_spi(Internals)
     public static func _render<Output: AsyncHTMLOutputStream>(
       _ html: consuming Self,
       into output: inout Output,
@@ -71,12 +74,11 @@ extension Never: HTML {
     }
   #endif
 
-  @_spi(Internals) @inlinable @inline(__always)
+  @_spi(Internals)
   public static func _render<Output: HTMLOutputStream>(
     _ html: consuming Self,
     into output: inout Output,
     context: HTMLContext
-
   ) {
   }
 }
